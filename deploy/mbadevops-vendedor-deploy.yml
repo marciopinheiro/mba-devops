@@ -35,7 +35,7 @@ spec:
             path: /health-check/
             port: default-port
           initialDelaySeconds: 0
-          periodSeconds: 10
+          periodSeconds: 60
           failureThreshold: 3
           successThreshold: 1
         livenessProbe:
@@ -43,7 +43,7 @@ spec:
             path: /health-check/
             port: default-port
           initialDelaySeconds: 0
-          periodSeconds: 10
+          periodSeconds: 60
           failureThreshold: 3
           successThreshold: 1
         volumeMounts:
@@ -57,7 +57,7 @@ spec:
         - name: FLASK_DEBUG
           value: "0"
         - name: REDIS_HOST
-          value: "10.104.96.174"
+          value: "10.98.51.21"
         - name: REDIS_PORT
           value: "6379"
         - name: REDIS_DB

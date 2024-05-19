@@ -1,0 +1,4 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+Requisição HTTP Produto,322,1088,3,2484,729.24,0.000%,27.49552,1941.46,3.17,72304.8
+Requisição HTTP Vendedor,282,46,1,221,50.70,0.355%,28.58591,1870.81,3.28,67015.8
+TOTAL,604,602,1,2484,745.00,0.166%,51.57544,3517.38,5.93,69835.4
