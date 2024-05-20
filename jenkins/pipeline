@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Project repository checkout') {
+            steps {
+                git(
+                    url: "https://github.com/marciopinheiro/mba-devops.git",
+                    branch: "main"
+                )
+                script{
+                    TAG_VERSION = sh(script: "git rev-parse --short HEAD", returnStdout:true).trim()
+                }
+            }
+        }
+        stage('Project image build') {
+            steps {
+                sh "docker build . -t marciopinheiro/mba-devops:${TAG_VERSION}"
+                sh "docker tag marciopinheiro/mba-devops:${TAG_VERSION} marciopinheiro/mba-devops:latest"
+            }
+        }
+        stage('Project image publish') {
+            steps {
+                withCredentials([usernamePassword(credentialsId:"dockerhub", usernameVariable: "USERNAME", passwordVariable: "PASSWORD")]) {
+                    sh "docker login -u '$USERNAME' -p '$PASSWORD'"
+                    sh "docker push marciopinheiro/mba-devops:${TAG_VERSION}"
+                    sh "docker push marciopinheiro/mba-devops:latest"
+                }
+                
+            }
+        }
+        stage('Project k8s image deploy') {
+            steps {
+                sh "kubectl set image deploy/mbadevops-produto-deploy mbadevops-produto=marciopinheiro/mba-devops${TAG_VERSION}"
+                sh "kubectl rollout status deploy/mbadevops-produto-deploy"
+                sh "kubectl set image deploy/mbadevops-vendedor-deploy mbadevops-vendedor=marciopinheiro/mba-devops${TAG_VERSION}"
+                sh "kubectl rollout status deploy/mbadevops-vendedor-deploy"
+            }
+        }
+    }
+}
