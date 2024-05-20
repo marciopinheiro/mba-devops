@@ -1,0 +1,1101 @@
+Iniciado pelo usuário Marcio Pinheiro
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /home/marcio.apinheiro/.jenkins/workspace/mbadevops-deploy
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Project repository checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /home/marcio.apinheiro/.jenkins/workspace/mbadevops-deploy/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/marciopinheiro/mba-devops.git # timeout=10
+Fetching upstream changes from https://github.com/marciopinheiro/mba-devops.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.45.1'
+ > git fetch --tags --force --progress -- https://github.com/marciopinheiro/mba-devops.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision f0cf1dc41a9efad881ccf8fc13bb9c48a12738b3 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f0cf1dc41a9efad881ccf8fc13bb9c48a12738b3 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main f0cf1dc41a9efad881ccf8fc13bb9c48a12738b3 # timeout=10
+Commit message: "fix: pipeline image version on k8s set"
+ > git rev-list --no-walk e817a0279d49dc002f5ff4fc03ad8484a0102894 # timeout=10
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ git rev-parse --short HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Project image build)
+[Pipeline] sh
++ docker build . -t marciopinheiro/mba-devops:f0cf1dc
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 514B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 1.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/python:3.12-slim@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63
+#5 resolve docker.io/library/python:3.12-slim@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63 0.0s done
+#5 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 17.99kB 0.0s done
+#4 DONE 0.0s
+
+#6 [2/7] RUN apt update && apt -y upgrade
+#6 CACHED
+
+#7 [3/7] RUN ln -snf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && echo America/Sao_Paulo > /etc/timezone
+#7 CACHED
+
+#8 [4/7] COPY ./ /var/www
+#8 DONE 0.1s
+
+#9 [5/7] WORKDIR /var/www
+#9 DONE 0.0s
+
+#10 [6/7] RUN pip install --upgrade pip
+#10 1.918 Requirement already satisfied: pip in /usr/local/lib/python3.12/site-packages (24.0)
+#10 2.188 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#10 DONE 2.5s
+
+#11 [7/7] RUN pip install --no-cache-dir -r requirements.txt
+#11 0.671 Collecting blinker==1.8.2 (from -r requirements.txt (line 2))
+#11 0.726   Downloading blinker-1.8.2-py3-none-any.whl.metadata (1.6 kB)
+#11 0.780 Collecting click==8.1.7 (from -r requirements.txt (line 3))
+#11 0.786   Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+#11 0.829 Collecting flask==3.0.3 (from -r requirements.txt (line 4))
+#11 0.838   Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)
+#11 0.881 Collecting gunicorn==22.0.0 (from -r requirements.txt (line 5))
+#11 0.887   Downloading gunicorn-22.0.0-py3-none-any.whl.metadata (4.4 kB)
+#11 0.914 Collecting itsdangerous==2.2.0 (from -r requirements.txt (line 6))
+#11 0.919   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+#11 0.956 Collecting jinja2==3.1.4 (from -r requirements.txt (line 7))
+#11 0.962   Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+#11 1.056 Collecting markupsafe==2.1.5 (from -r requirements.txt (line 8))
+#11 1.065   Downloading MarkupSafe-2.1.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+#11 1.402 Collecting packaging==24.0 (from -r requirements.txt (line 9))
+#11 1.411   Downloading packaging-24.0-py3-none-any.whl.metadata (3.2 kB)
+#11 1.655 Collecting redis==5.0.4 (from -r requirements.txt (line 10))
+#11 1.663   Downloading redis-5.0.4-py3-none-any.whl.metadata (9.3 kB)
+#11 1.834 Collecting werkzeug==3.0.3 (from -r requirements.txt (line 11))
+#11 1.839   Downloading werkzeug-3.0.3-py3-none-any.whl.metadata (3.7 kB)
+#11 1.913 Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
+#11 1.919 Downloading click-8.1.7-py3-none-any.whl (97 kB)
+#11 1.942    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 8.3 MB/s eta 0:00:00
+#11 1.949 Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+#11 1.968    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.7/101.7 kB 14.0 MB/s eta 0:00:00
+#11 1.986 Downloading gunicorn-22.0.0-py3-none-any.whl (84 kB)
+#11 1.995    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.4/84.4 kB 14.2 MB/s eta 0:00:00
+#11 2.005 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#11 2.016 Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#11 2.040    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 kB 7.7 MB/s eta 0:00:00
+#11 2.062 Downloading MarkupSafe-2.1.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (28 kB)
+#11 2.073 Downloading packaging-24.0-py3-none-any.whl (53 kB)
+#11 2.082    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 kB 32.0 MB/s eta 0:00:00
+#11 2.096 Downloading redis-5.0.4-py3-none-any.whl (251 kB)
+#11 2.128    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 252.0/252.0 kB 9.2 MB/s eta 0:00:00
+#11 2.142 Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
+#11 2.170    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 kB 9.8 MB/s eta 0:00:00
+#11 2.442 Installing collected packages: redis, packaging, markupsafe, itsdangerous, click, blinker, werkzeug, jinja2, gunicorn, flask
+#11 3.564 Successfully installed blinker-1.8.2 click-8.1.7 flask-3.0.3 gunicorn-22.0.0 itsdangerous-2.2.0 jinja2-3.1.4 markupsafe-2.1.5 packaging-24.0 redis-5.0.4 werkzeug-3.0.3
+#11 3.565 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#11 DONE 4.1s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.7s done
+#12 exporting manifest sha256:4147fb7b7c9e849b3b90487195443b7d0200479f71a75085e2c85ecaac748556 done
+#12 exporting config sha256:779f4e6dc1d063f24e61b2bac311fe7a18d1bcad8a57211caf5d36d59842c2fd done
+#12 exporting attestation manifest sha256:dc16d11c35152b8a537716e5f97cfb7c8d6850af91e02296a6524af1b7740af8 0.0s done
+#12 exporting manifest list sha256:05d2115315e9f3a3d9703a2083eb641881fa512e2c117e9e8676eee3d3c0737f done
+#12 naming to docker.io/marciopinheiro/mba-devops:f0cf1dc done
+#12 unpacking to docker.io/marciopinheiro/mba-devops:f0cf1dc
+#12 unpacking to docker.io/marciopinheiro/mba-devops:f0cf1dc 0.3s done
+#12 DONE 1.0s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/wl04iy8alxp634fchpnlj9f2u
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview
+[Pipeline] sh
++ docker tag marciopinheiro/mba-devops:f0cf1dc marciopinheiro/mba-devops:latest
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Project image publish)
+[Pipeline] withCredentials
+Masking supported pattern matches of $USERNAME or $PASSWORD
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [PASSWORD, USERNAME]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ docker login -u **** -p ****
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Login Succeeded
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [USERNAME]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ docker push ****/mba-devops:f0cf1dc
+The push refers to repository [docker.io/****/mba-devops]
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+2e133733af76: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+6c355c87f5dc: Waiting
+ded8879d9a79: Waiting
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Layer already exists
+9b4abca829f3: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+6c355c87f5dc: Waiting
+09f376ebb190: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Layer already exists
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+4f4fb700ef54: Layer already exists
+435e96552299: Waiting
+3cf9507408dc: Layer already exists
+c2b89908622d: Layer already exists
+09f376ebb190: Layer already exists
+276709cbedc1: Layer already exists
+6c355c87f5dc: Layer already exists
+b7c07bb643ed: Pushed
+57205832f7a3: Pushed
+9b4abca829f3: Pushed
+435e96552299: Pushed
+f0cf1dc: digest: sha256:05d2115315e9f3a3d9703a2083eb641881fa512e2c117e9e8676eee3d3c0737f size: 856
+[Pipeline] sh
++ docker push ****/mba-devops:latest
+The push refers to repository [docker.io/****/mba-devops]
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+4f4fb700ef54: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+276709cbedc1: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+276709cbedc1: Layer already exists
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+4f4fb700ef54: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+435e96552299: Waiting
+3cf9507408dc: Waiting
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Waiting
+ded8879d9a79: Waiting
+09f376ebb190: Waiting
+6c355c87f5dc: Waiting
+4f4fb700ef54: Waiting
+435e96552299: Waiting
+3cf9507408dc: Layer already exists
+57205832f7a3: Waiting
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+2e133733af76: Layer already exists
+ded8879d9a79: Layer already exists
+09f376ebb190: Layer already exists
+6c355c87f5dc: Waiting
+4f4fb700ef54: Layer already exists
+435e96552299: Waiting
+57205832f7a3: Already exists
+9b4abca829f3: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+6c355c87f5dc: Waiting
+6c355c87f5dc: Layer already exists
+9b4abca829f3: Layer already exists
+c2b89908622d: Waiting
+b7c07bb643ed: Waiting
+435e96552299: Waiting
+c2b89908622d: Waiting
+b7c07bb643ed: Layer already exists
+435e96552299: Waiting
+435e96552299: Waiting
+c2b89908622d: Layer already exists
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Waiting
+435e96552299: Layer already exists
+latest: digest: sha256:05d2115315e9f3a3d9703a2083eb641881fa512e2c117e9e8676eee3d3c0737f size: 856
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Project k8s image deploy)
+[Pipeline] sh
++ kubectl set image deploy/mbadevops-produto-deploy mbadevops-produto=marciopinheiro/mba-devops:f0cf1dc
+deployment.apps/mbadevops-produto-deploy image updated
+[Pipeline] sh
++ kubectl rollout status deploy/mbadevops-produto-deploy
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 3 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 3 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 3 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mbadevops-produto-deploy" rollout to finish: 3 of 4 updated replicas are available...
+deployment "mbadevops-produto-deploy" successfully rolled out
+[Pipeline] sh
++ kubectl set image deploy/mbadevops-vendedor-deploy mbadevops-vendedor=marciopinheiro/mba-devops:f0cf1dc
+deployment.apps/mbadevops-vendedor-deploy image updated
+[Pipeline] sh
++ kubectl rollout status deploy/mbadevops-vendedor-deploy
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 2 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 3 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 3 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 3 out of 4 new replicas have been updated...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 3 of 4 updated replicas are available...
+deployment "mbadevops-vendedor-deploy" successfully rolled out
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
