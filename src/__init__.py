@@ -49,7 +49,7 @@ def create_flask(test_config=None):
             pass
 
         return {
-            "message": "MBA - Devops - v1.0",
+            "message": "MBA - Devops - v2.0",
             "file_content": file_content
         }
 
