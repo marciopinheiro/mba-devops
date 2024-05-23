@@ -1095,7 +1095,7 @@ Waiting for deployment "mbadevops-vendedor-deploy" rollout to finish: 3 of 4 upd
 deployment "mbadevops-vendedor-deploy" successfully rolled out
 [Pipeline] }
 [Pipeline] // stage
-[Pipeline] }
+[Pipeline] } 
 [Pipeline] // node
 [Pipeline] End of Pipeline
 Finished: SUCCESS
